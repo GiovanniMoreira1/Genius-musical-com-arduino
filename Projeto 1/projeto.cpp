@@ -8,7 +8,7 @@ const int ledAcerto = 10;
 const int ledErro = 9;
 
 // variáveis de ambiente
-int nivel = 0;
+int nivel = 1;
 int vidas = 3;
 
 // lista das músicas
@@ -22,68 +22,62 @@ void setup() {
     pinMode(buzzer, OUTPUT);
     pinMode(ledAcerto, OUTPUT);
     pinMode(ledErro, OUTPUT);
-
     for (int i = 0; i < 4; i++) {
-        pinMode(botoes[i], INPUT_PULLUP);
+        pinMode(botoes[i], INPUT);
     }
 
   	Serial.begin(9600);
     lcd.begin(16, 2);
-    lcd.print("Bem-vindo ao jogo");
+    lcd.print("Genius Musical");
     delay(2000);
-    tocar_musica_menu();
+    //tocar_musica_menu();
     mostrarMenu();
 }
 
 void loop() {
     mostrarMenu();
-
-    while (true) { 
-        int botao = aguardarBotao();
-
+	int botao = aguardarBotao();
+    while (true) {
+      Serial.println(botao);
         if (botao == 0) {  // subir música
             indiceMusica = (indiceMusica - 1 + totalMusicas) % totalMusicas;
-            mostrarMenu();
+            return;
         } 
         else if (botao == 1) {  // descer música
-            indiceMusica = (indiceMusica + 1) % totalMusicas;
-            mostrarMenu();
+             indiceMusica = (indiceMusica + 1) % totalMusicas;
+            return;
         } 
         else if (botao == 2) {  // selecionar música
             tocarMusica(indiceMusica);
-            mostrarMenu();
+            return;
         }
     }
 }
 
 int aguardarBotao() {
     while (true) {
-        for (int i = 0; i < 4; i++) {
-          	Serial.println("oi");
-            if (digitalRead(botoes[i]) == LOW) {  
-                delay(50);
-            
-                while (digitalRead(botoes[i]) == LOW) {
-                    delay(10); 
-                }
-                delay(50); 
-              	Serial.println("Teste");
-                return i;
-            }
+      for (int i = 0; i < 4; i++) {
+        if(digitalRead(botoes[i]) != LOW) {  
+          delay(200);  
+          Serial.println(i);
+          return i;  
         }
+      }
     }
 }
 
 void mostrarMenu() {
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Escolha musica:");
+    lcd.print("Escolher musica:");
     lcd.setCursor(0, 1);
-    lcd.print(musicas[indiceMusica]);
+  	String exemplo = "-> " + musicas[indiceMusica];
+    lcd.print(exemplo);
 }
 
 void tocar_musica_menu() {
     int melodia[] = {262, 294, 330, 349, 392, 440, 494, 523};
+  
     int duracao = 200;
 
     for (int i = 0; i < 8; i++) {
