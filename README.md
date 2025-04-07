@@ -21,8 +21,12 @@ Este é um projeto para a matéria de Computação Móvel, do 4º semestre de Ci
 - **2x LEDs** (para feedback)
 - **Resistores e jumpers**
 
-### Esquema Elétrico
+### Esquema Elétrico e funcionamento
+
 ![image](https://github.com/user-attachments/assets/14014ae5-bdd0-4b3f-bcb6-d3589098d848)
+
+
+![gif_arduino](https://github.com/user-attachments/assets/15e9ff80-5d1b-435e-a6e6-121c5613634c)
 
 # Modos
 ## Música
